@@ -246,9 +246,14 @@ public class NoteActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void createNewNote() {
-        DataManager dm = DataManager.getInstance();
-        mNoteId = dm.createNewNote();
-//        mNote = dm.getNotes().get(mNoteId);
+        //Create placeholders for new notes
+        ContentValues values = new ContentValues();
+        values.put(NoteInfoEntry.COLUMN_COURSE_ID, "");
+        values.put(NoteInfoEntry.COLUMN_NOTE_TITLE, "");
+        values.put(NoteInfoEntry.COLUMN_NOTE_TEXT, "");
+
+        //Get database connection and use its insert() and get back its _Id as an Integer
+        mNoteId = (int) mDbOpenHelper.getReadableDatabase().insert(NoteInfoEntry.TABLE_NAME,null, values);
     }
 
     @Override
